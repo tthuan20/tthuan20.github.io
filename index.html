@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Món Quà Đặc Biệt 20/10</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@400;500;700&display=swap');
+
+        :root {
+            --primary-color: #e91e63; /* Deep Pink */
+            --secondary-color: #ffdde1; /* Light Pink */
+            --text-color: #333;
+            --bg-color-main: #fff0f5; /* Blushed Pink */
+            --heart-color-effect: #ff7a7a;
+            --heart-color-bg: rgba(255, 255, 255, 0.6);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg-color-main);
+            color: var(--text-color);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .heart-background-container {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; overflow: hidden; z-index: -1;
+        }
+        .heart-background-container span {
+            position: absolute; bottom: -50px; color: var(--heart-color-bg);
+            font-size: 2rem; animation: animateHearts 10s linear infinite; filter: blur(1px);
+        }
+        @keyframes animateHearts {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+        .heart-background-container span:nth-child(1) { left: 10%; animation-duration: 15s; font-size: 2.5rem; }
+        .heart-background-container span:nth-child(2) { left: 20%; animation-duration: 10s; animation-delay: 2s; font-size: 1.5rem; }
+        .heart-background-container span:nth-child(3) { left: 35%; animation-duration: 18s; animation-delay: 1s; }
+        .heart-background-container span:nth-child(4) { left: 50%; animation-duration: 12s; animation-delay: 4s; font-size: 2.2rem; }
+        .heart-background-container span:nth-child(5) { left: 65%; animation-duration: 9s; }
+        .heart-background-container span:nth-child(6) { left: 80%; animation-duration: 16s; animation-delay: 3s; font-size: 3rem; }
+        .heart-background-container span:nth-child(7) { left: 90%; animation-duration: 11s; animation-delay: 5s; }
+
+        #password-gate {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(to top, #ffdde1, #ee9ca7);
+            z-index: 10000; display: flex; justify-content: center; align-items: center;
+            flex-direction: column; transition: opacity 0.8s ease-out, visibility 0.8s; overflow: hidden;
+        }
+        .password-box {
+            background: rgba(255, 255, 255, 0.9); padding: 40px; border-radius: 15px;
+            backdrop-filter: blur(5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center; width: 90%; max-width: 400px; z-index: 2;
+        }
+        .gift-icon { width: 120px; margin-bottom: 20px; }
+        .password-box h2 { font-family: 'Playfair Display', serif; color: var(--primary-color); margin-bottom: 20px; }
+        .password-box input {
+            width: 80%; padding: 12px; border: 2px solid #ddd; border-radius: 8px;
+            margin-bottom: 20px; text-align: center; font-size: 1.2em; transition: border-color 0.3s;
+        }
+        .password-box input:focus { outline: none; border-color: var(--primary-color); }
+        .password-box button {
+            padding: 12px 30px; border: none; background-color: var(--primary-color);
+            color: white; font-size: 1em; font-weight: bold; border-radius: 8px;
+            cursor: pointer; transition: background-color 0.3s, transform 0.2s;
+        }
+        .password-box button:hover { background-color: #c85c7c; transform: scale(1.05); }
+        #error-message { color: var(--primary-color); margin-top: 15px; display: none; }
+        #password-gate.hidden { opacity: 0; visibility: hidden; }
+
+        #main-website {
+            opacity: 0; visibility: hidden; transition: opacity 1s ease-in;
+            background-color: transparent;
+            min-height: 100vh;
+            position: relative; z-index: 1;
+        }
+        #main-website.visible { opacity: 1; visibility: visible; }
+        
+        #card-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;
+            z-index: 9998; perspective: 1000px; opacity: 0; visibility: hidden; transition: opacity 0.5s, visibility 0.5s;
+            background: transparent;
+        }
+        #card-container.visible { opacity: 1; visibility: visible; }
+        .card { width: 320px; height: 450px; position: relative; cursor: pointer; }
+        .card-inner { width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+        .card.open .card-inner { transform: rotateY(-180deg); }
+        .card-face {
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.2); border-radius: 15px;
+            text-align: center;
+        }
+        .card-front { background: linear-gradient(135deg, #f9e7e7, #ffefd5); }
+        .card-front h2 {
+            font-family: 'Playfair Display', serif; color: var(--primary-color);
+            font-size: 2em; margin: 0 20px 10px; line-height: 1.2;
+        }
+        .card-front p { font-size: 1.1em; color: #555; margin: 0 20px; }
+
+        .card-inside {
+            background: #fff; transform: rotateY(180deg); text-align: center;
+            padding: 20px; box-sizing: border-box;
+        }
+        .card-inside p { font-size: 1.1em; line-height: 1.7; color: #444; margin: 0; }
+        .highlight { font-weight: 700; color: var(--primary-color); }
+        
+        .card-button {
+            margin-top: 25px; padding: 10px 25px; border: none; background-color: var(--primary-color);
+            color: white; font-size: 1em; font-weight: bold; border-radius: 8px; cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s; opacity: 0;
+            animation: fadeInButton 1s ease-in 1.2s forwards;
+        }
+        .card-button:hover { background-color: #c85c7c; transform: scale(1.05); }
+        @keyframes fadeInButton { to { opacity: 1; } }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 50px 20px; text-align: center; }
+        .main-content { padding: 0; }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            perspective: 1000px; /* For 3D transformations */
+        }
+        .gallery-item {
+            border-radius: 15px; overflow: hidden; 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15); /* Soft initial shadow */
+            position: relative; cursor: pointer;
+            opacity: 0;
+            transform: translate3d(var(--start-x, 0), var(--start-y, 0), var(--start-z, 0)) rotateX(var(--start-rotX, 0deg)) rotateY(var(--start-rotY, 0deg)) rotateZ(var(--start-rotZ, 0deg)) scale(0.5);
+            transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 1s ease-out, box-shadow 0.3s ease; /* Smooth transition for entrance */
+            will-change: transform, opacity;
+            border: 2px solid transparent; /* For hover glow */
+        }
+        
+        .gallery-item.animate-in {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) rotate(var(--final-rot, 0deg)) scale(1);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05) rotate(var(--final-rot, 0deg)); /* Scale on hover, maintain rotation */
+            box-shadow: 0 0 20px var(--primary-color), 0 0 40px rgba(var(--primary-color), 0.2), 0 15px 40px rgba(0,0,0,0.3); /* Enhanced shadow and glow */
+            border-color: var(--primary-color); /* Glow border */
+            z-index: 10;
+        }
+        .gallery-item img {
+            width: 100%; height: 200px;
+            object-fit: cover; display: block;
+            border-radius: 13px; /* Slightly smaller to show glow border */
+        }
+        
+        .click-heart { position: fixed; font-size: 1.5rem; color: var(--heart-color-effect); animation: floatUp 1.5s ease-out forwards; pointer-events: none; z-index: 99999; }
+        @keyframes floatUp { to { transform: translateY(-150px); opacity: 0; } }
+        #music-control {
+            position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background-color: var(--primary-color);
+            color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 10000; font-size: 24px;
+        }
+        @media (max-width: 768px) { .card { transform: scale(0.8); } }
+    </style>
+</head>
+<body>
+    
+    <div class="heart-background-container">
+        <span>❤️</span><span>❤️</span><span>❤️</span><span>❤️</span><span>❤️</span><span>❤️</span><span>❤️</span>
+    </div>
+
+    <div id="password-gate">
+        <div class="password-box">
+            <img src="anh1.jpg" alt="Hộp Quà" class="gift-icon">
+            <h2>Món Quà Đặc Biệt</h2>
+            <p>Vui lòng nhập mật khẩu để mở</p>
+            <input type="password" id="password-input" placeholder="••••">
+            <button id="submit-button">Mở Quà</button>
+            <p id="error-message">Mật khẩu không đúng. Vui lòng thử lại!</p>
+        </div>
+    </div>
+    
+    <div id="card-container">
+        <div class="card" id="greeting-card">
+            <div class="card-inner">
+                <div class="card-face card-front">
+                    <h2>Gửi Người Phụ Nữ Tuyệt Vời</h2>
+                    <p>Nhấp vào đây để mở</p>
+                </div>
+                <div class="card-face card-inside">
+                    <p>Nhân ngày 20/10, xin gửi những lời chúc nồng nhiệt nhất đến em.<br>Chúc em luôn <span class="highlight">xinh đẹp, rạng rỡ, và ngập tràn hạnh phúc</span>.<br><br>Cảm ơn vì đã làm cho thế giới này trở nên dịu dàng và tốt đẹp hơn. Mong rằng mỗi ngày của em đều là một ngày vui và ý nghĩa!</p>
+                    <button id="continue-button" class="card-button">Mở Quà</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="main-website">
+        <audio id="background-music" loop><source src="https://www.chosic.com/wp-content/uploads/2021/04/purrple-cat-wondering.mp3" type="audio/mpeg"></audio>
+        <div id="music-control">▶️</div>
+        <div class="container">
+            <main class="main-content">
+                <div class="gallery">
+                    <div class="gallery-item"><img src="anh1.jpg" alt="Ảnh đẹp 1"></div>
+                    <div class="gallery-item"><img src="anh2.jpg" alt="Ảnh đẹp 2"></div>
+                    <div class="gallery-item"><img src="anh3.jpg" alt="Ảnh đẹp 3"></div>
+                    <div class="gallery-item"><img src="anh4.jpg" alt="Ảnh đẹp 4"></div>
+                    <div class="gallery-item"><img src="anh5.jpg" alt="Ảnh đẹp 5"></div>
+                    <div class="gallery-item"><img src="anh6.jpg" alt="Ảnh đẹp 6"></div>
+                    <div class="gallery-item"><img src="anh7.jpg" alt="Ảnh đẹp 7"></div>
+                    <div class="gallery-item"><img src="anh8.jpg" alt="Ảnh đẹp 8"></div>
+                    <div class="gallery-item"><img src="anh9.jpg" alt="Ảnh đẹp 9"></div>
+                    <div class="gallery-item"><img src="anh10.jpg" alt="Ảnh đẹp10"></div>
+                    <div class="gallery-item"><img src="anh11.jpg" alt="Ảnh đẹp11"></div>
+                    <div class="gallery-item"><img src="anh12.jpg" alt="Ảnh đẹp12"></div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const CORRECT_PASS = '13082009';
+            const passwordGate = document.getElementById('password-gate');
+            const passwordInput = document.getElementById('password-input');
+            const submitButton = document.getElementById('submit-button');
+            const errorMessage = document.getElementById('error-message');
+            const cardContainer = document.getElementById('card-container');
+            const greetingCard = document.getElementById('greeting-card');
+            const continueButton = document.getElementById('continue-button');
+            const mainWebsite = document.getElementById('main-website');
+            const music = document.getElementById('background-music');
+            const musicControl = document.getElementById('music-control');
+            let galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
+
+            function checkPassword() {
+                if (passwordInput.value === CORRECT_PASS) {
+                    passwordGate.classList.add('hidden');
+                    setTimeout(() => { cardContainer.classList.add('visible'); }, 800);
+                } else {
+                    errorMessage.style.display = 'block';
+                    passwordInput.value = '';
+                }
+            }
+            submitButton.addEventListener('click', checkPassword);
+            passwordInput.addEventListener('keypress', (e) => e.key === 'Enter' && checkPassword());
+            
+            greetingCard.addEventListener('click', function() {
+                if (this.classList.contains('open')) return;
+                this.classList.add('open');
+                playMusic();
+            });
+
+            continueButton.addEventListener('click', function() {
+                cardContainer.style.opacity = '0';
+                setTimeout(() => {
+                    cardContainer.style.visibility = 'hidden';
+                    mainWebsite.classList.add('visible');
+                    document.body.style.overflow = 'auto';
+                    setupAndAnimateGalleryItems();
+                }, 500); 
+            });
+
+            function setupAndAnimateGalleryItems() {
+                const galleryContainer = document.querySelector('.gallery');
+                galleryItems.sort(() => Math.random() - 0.5).forEach(item => galleryContainer.appendChild(item));
+
+                galleryItems.forEach((item, index) => {
+                    // Random final rotation
+                    const randomFinalRotate = Math.random() * 10 - 5; // -5deg to 5deg
+                    item.style.setProperty('--final-rot', `${randomFinalRotate}deg`);
+
+                    // Random initial position and rotation for "falling/floating" effect
+                    const startX = (Math.random() * 1000 - 500); // -500px to 500px off-center
+                    const startY = (Math.random() * 500 - 800);  // -800px to -300px (from top, above screen)
+                    const startZ = Math.random() * 500 - 250;    // Random Z for perspective
+                    const startRotX = Math.random() * 180 - 90;  // -90deg to 90deg
+                    const startRotY = Math.random() * 180 - 90;
+                    const startRotZ = Math.random() * 360;
+
+                    item.style.setProperty('--start-x', `${startX}px`);
+                    item.style.setProperty('--start-y', `${startY}px`);
+                    item.style.setProperty('--start-z', `${startZ}px`);
+                    item.style.setProperty('--start-rotX', `${startRotX}deg`);
+                    item.style.setProperty('--start-rotY', `${startRotY}deg`);
+                    item.style.setProperty('--start-rotZ', `${startRotZ}deg`);
+
+
+                    setTimeout(() => {
+                        item.classList.add('animate-in');
+                    }, index * 180); // Staggered animation
+                });
+            }
+
+            // Enhanced Parallax effect on scroll
+            window.addEventListener('scroll', function() {
+                if (mainWebsite.classList.contains('visible')) {
+                    const scrollY = window.scrollY;
+                    galleryItems.forEach(item => {
+                        const speedY = -0.05; // Base speed for Y
+                        const speedX = Math.random() * 0.04 - 0.02; // -0.02 to 0.02 for X
+                        const speedRot = Math.random() * 0.02 - 0.01; // -0.01 to 0.01 for rotation
+
+                        const yPos = scrollY * speedY;
+                        const xPos = scrollY * speedX;
+                        const zRot = scrollY * speedRot;
+
+                        const finalRot = item.style.getPropertyValue('--final-rot'); // Get the initial random rotation
+                        
+                        item.style.transform = `translate3d(${xPos}px, ${yPos}px, 0) rotateZ(${finalRot + zRot}deg) scale(1)`;
+                    });
+                }
+            }, { passive: true });
+
+            document.addEventListener('click', function(e) {
+                if (!mainWebsite.classList.contains('visible') && !cardContainer.classList.contains('visible')) return; 
+                let heart = document.createElement('div');
+                heart.className = 'click-heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = `${e.clientX - 10}px`;
+                heart.style.top = `${e.clientY - 10}px`;
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 1500);
+            });
+
+            let isPlaying = false;
+            function playMusic() {
+                if (!isPlaying) {
+                     music.play().catch(console.error);
+                    musicControl.textContent = '⏸️';
+                    isPlaying = true;
+                }
+            }
+            function toggleMusic() {
+                if (!mainWebsite.classList.contains('visible') && !cardContainer.classList.contains('visible')) return; 
+                isPlaying ? music.pause() : music.play();
+                isPlaying = !isPlaying;
+                musicControl.textContent = isPlaying ? '⏸️' : '▶️';
+            }
+            musicControl.addEventListener('click', toggleMusic);
+        });
+    </script>
+</body>
+</html>
